@@ -5,6 +5,13 @@ import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Workspace from './workspace/index.tsx';
 import Project from './workspace/project/index.tsx';
+import { ClerkProvider } from '@clerk/react'
+
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error('Missing Clerk Publishable Key')
+}
 
 const router = createBrowserRouter([
   {
@@ -12,7 +19,7 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path:'workspace',
+    path:'/workspace',
     element:<Workspace/>,
     children:[
       {path:'project/:projectId', element:<Project/>}
@@ -22,6 +29,11 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ClerkProvider
+      publishableKey={PUBLISHABLE_KEY}
+      afterSignOutUrl="/"
+    >
+      <RouterProvider router={router} />
+    </ClerkProvider>
   </StrictMode>,
 )
