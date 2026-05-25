@@ -1,17 +1,22 @@
 import React, { useContext, useEffect } from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useLocation } from 'react-router-dom'
 import { useUser } from '@clerk/react'
 import { Button } from '@/components/ui/button'
+
+import Header from '@/components/custom/Header'
 
 import { firebaseDb } from './../../config/FirebaseConfig'
 
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { UserDetailContext } from '../../context/UserDetailContext'
+import PromptBox from '@/components/custom/PromptBox'
+import MyProjects from '@/components/custom/MyProjects'
 
 function Workspace () {
   const { user, isLoaded } = useUser()
 
   const { userDetail, setUserDetail } = useContext(UserDetailContext)
+  const location = useLocation()
 
   const CreateNewUser = async () => {
     if (!user) return
@@ -70,7 +75,15 @@ function Workspace () {
 
   return (
     <div>
-      <h1>Workspace</h1>
+      <Header />
+
+      {location.pathname === '/workspace' && (
+        <div>
+          <PromptBox />
+          <MyProjects/>
+        </div>
+      )}
+
       <Outlet />
     </div>
   )
