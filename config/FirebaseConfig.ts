@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAF5GZxjLy1gekXvxI6lzflWG-lEoAskmQ',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: 'visionslidedes.firebaseapp.com',
   projectId: 'visionslidedes',
   storageBucket: 'visionslidedes.firebasestorage.app',
