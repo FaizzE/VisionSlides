@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import ProfessionalSlider from './../../assets/professional.jpg'
 import DarkSlider from './../../assets/dark.jpg'
@@ -123,12 +123,13 @@ const Design_Styles = [
 ]
 
 const SlidersStyle = () => {
+  const [selectedStyle, setSelectedStyle] = useState<string>(Design_Styles[0].styleName)
   return (
     <div className='mt-5'>
       <h2 className='font-bold text-xl'>Select Visual Theme</h2>
       <div className='grid grid-cols-2 md:grid-cols-3 gap-5 mt-3'>
         {Design_Styles.map((design, index) => (
-          <div key={index} className='cursor-pointer'>
+          <div key={index} className={`cursor-pointer ${design.styleName === selectedStyle ? 'p-3 border-2 border-primary rounded-2xl' : ''}`} onClick={() => setSelectedStyle(design.styleName)}>
             <img
               src={design.bannerImage}
               alt={design.styleName}

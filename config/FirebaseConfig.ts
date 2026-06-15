@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
+import { getAI, getGenerativeModel, GoogleAIBackend } from 'firebase/ai'
+
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -14,3 +16,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 
 export const firebaseDb = getFirestore(app)
+
+// Initialize the Gemini Developer API backend service
+const ai = getAI(app, { backend: new GoogleAIBackend() })
+
+// Create a `GenerativeModel` instance with a model that supports your use case
+export const GeminiAiModel = getGenerativeModel(ai, { model: 'gemini-3.5-flash' })
